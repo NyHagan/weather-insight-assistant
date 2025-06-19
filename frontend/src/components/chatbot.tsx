@@ -1,9 +1,11 @@
 import OpenAI from "openai"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 const Chatbot = () => {
   const [input, setInput] = useState("")
   const [messages, setMessages] = useState<string[]>([])
+  const [isTyping, setIsTyping] = useState(false)
+
 
   // initialize openai client
   const openai = new OpenAI({
@@ -19,6 +21,8 @@ const Chatbot = () => {
     const userMessage = `🧑: ${input}`
     setMessages(prev => [...prev, userMessage])
     setInput("")
+    setIsTyping(true)
+
 
     try {
       // fetch raw weather data from fastapi container
@@ -43,6 +47,7 @@ const Chatbot = () => {
       console.error("🔍 openai error details:", err?.response || err?.message || err)
       setMessages(prev => [...prev, "🤖: something went wrong trying to respond."])
     }
+    setIsTyping(false)
   }
 
   return (
@@ -89,7 +94,19 @@ const Chatbot = () => {
             {msg}
           </div>
         ))}
-      </div>
+        {isTyping && ( 
+          <div style={{
+            alignSelf: "flex-start",
+            fontStyle: "italic",
+            color: "#aaa",
+            margin: "0.5rem 0"
+          }}>
+            weatherbot is typing<span className="dot-anim">...</span>
+          </div>
+        )}
+    </div>
+      
+
 
       {/* fixed input area */}
       <div style={{

@@ -1,8 +1,10 @@
 FROM python:3.11-slim
 
+# set working directory inside the container
 WORKDIR /app
 
-# Install ODBC tools + fix Microsoft keyring issue
+# install ODBC tools + fix Microsoft keyring issue
+# necessary for connecting to Azure SQL from Linux
 RUN apt-get update && apt-get install -y \
     unixodbc \
     unixodbc-dev \
@@ -20,10 +22,12 @@ RUN apt-get update && apt-get install -y \
 
 COPY requirements.txt .
 
+# install python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
 EXPOSE 8000
 
+# start fastapi using uvicorn
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

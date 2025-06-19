@@ -1,9 +1,25 @@
 from fastapi import FastAPI
 import pyodbc
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 
-# Hardcoded for local testing—safe to remove once env vars are wired in Azure
+origins = [
+    "http://localhost:5173",             # For local testing
+    "https://your-frontend-site.com"     # will replace with my site
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],     # Allow all HTTP methods
+    allow_headers=["*"],     # Allow all custom headers
+)
+
+
+# Hardcoded for local testing to be removed later into environment variables or azure
 SQL_SERVER = "weather-insights-server.database.windows.net"
 SQL_DATABASE = "weather-insights-db"
 SQL_USERNAME = "nyweather_user"
@@ -22,6 +38,7 @@ def get_connection():
         timeout=30
     )
 
+# Simple health check for the API
 @app.get("/")
 def home():
     return {
@@ -29,6 +46,7 @@ def home():
         "message": "API working fine on Azure 🚀"
     }
 
+# Main endpoint to retrieve weather data
 @app.get("/weather")
 def get_weather():
     try:
@@ -43,6 +61,7 @@ def get_weather():
     except Exception as e:
         return {"error": str(e)}
 
+# Returns current login info for connection testing/debugging
 @app.get("/whoami")
 def whoami():
     try:

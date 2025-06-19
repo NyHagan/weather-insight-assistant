@@ -12,5 +12,17 @@ html, body, #root {
 }
 
 * {
-  outline: 1px dashed hotpink;
+  outline: 1px dashed rgb(20, 8, 14);
+}
+
+@keyframes blink {
+  0% { opacity: 0.2 }
+  20% { opacity: 1 }
+  100% { opacity: 0.2 }
+}
+
+.dot-anim::after {
+  content: "⋯";
+  animation: blink 1.5s infinite steps(1);
+  letter-spacing: 0.2em;
 }
