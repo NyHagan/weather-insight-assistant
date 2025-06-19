@@ -7,7 +7,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost:5173",             # For local testing
-    "https://your-frontend-site.com"     # will replace with my site
+    "https://calm-rock-01716e60f.6.azurestaticapps.net"     # my site
 ]
 
 app.add_middleware(
