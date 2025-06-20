@@ -61,7 +61,7 @@ def get_weather():
     except Exception as e:
         return {"error": str(e)}
 
-# Returns current login info for connection testing/debugging
+# Returns the current login info for connection testing/debugging
 @app.get("/whoami")
 def whoami():
     try:
