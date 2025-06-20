@@ -65,7 +65,7 @@ def get_weather():
 @app.get("/whoami")
 def whoami():
     try:
-        conn = get_connection()
+        conn = get_connection()   #database connection
         cursor = conn.cursor()
         cursor.execute("SELECT SUSER_SNAME(), USER_NAME()")
         suser, user = cursor.fetchone()
