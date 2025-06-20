@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-import pyodbc
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -27,6 +26,7 @@ SQL_PASSWORD = "N3wSafeP4ssword2025"
 SQL_DRIVER = "{ODBC Driver 18 for SQL Server}"
 
 def get_connection():
+    import pyodbc
     return pyodbc.connect(
         f"DRIVER={SQL_DRIVER};"
         f"SERVER={SQL_SERVER};"
