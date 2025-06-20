@@ -38,8 +38,6 @@ The design follows a clean separation of layers:
 
 ## Backend API: Key Endpoints
 
-**Base URL:** `https://your-api-url-here.azurecontainerapps.io`
-
 - `GET /` – Health check  
 - `GET /weather` – Returns top 20 records from `weather_curated`  
 - `GET /whoami` – Diagnostic — shows SQL login + user info  
@@ -187,8 +185,6 @@ Workflows are managed via GitHub Actions:
 ---
 
 ## Extension Ideas
-
-Here are areas to explore post-prototype:
 
 - Add time-series forecasting with Prophet or Azure ML  
 - Implement semantic search via Azure AI Search indexing on `weather_curated`  
